@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Books - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h2>Available Books</h2>
+        </div>
+        <div class="col-md-6 text-end">
+            {% if current_user.is_authenticated %}
+                {% if current_user.is_admin %}
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary">Back to Admin Dashboard</a>
+                {% else %}
+                    <a href="{{ url_for('student_dashboard') }}" class="btn btn-primary">Back to Student Dashboard</a>
+                {% endif %}
+            {% else %}
+                <a href="{{ url_for('index') }}" class="btn btn-primary">Back to Home</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        {% for book in books %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ book[2] }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">By {{ book[3] }}</h6>
+                    <p class="card-text">
+                        <strong>ISBN:</strong> {{ book[1] }}<br>
+                        <strong>Publisher:</strong> {{ book[4] }}<br>
+                        <strong>Year:</strong> {{ book[5] }}<br>
+                        <strong>Genre:</strong> {{ book[6] }}<br>
+                        <strong>Available:</strong> {{ book[8] }}/{{ book[7] }}
+                    </p>
+                    {% if current_user.is_authenticated and not current_user.is_admin %}
+                        {% if book[8] > 0 %}
+                        <form action="{{ url_for('borrow_book', book_id=book[0]) }}" method="POST">
+                            <button type="submit" class="btn btn-success">Borrow</button>
+                        </form>
+                        {% else %}
+                        <button class="btn btn-secondary" disabled>Not Available</button>
+                        {% endif %}
+                    {% endif %}
+                    <a href="{{ url_for('book_reviews', book_id=book[0]) }}" class="btn btn-outline-secondary">Reviews</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% if not books %}
+<div class="alert alert-info">
+    No books found.
+</div>
+{% endif %}
+{% endblock %} 

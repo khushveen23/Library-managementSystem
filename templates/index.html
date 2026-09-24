@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4 mb-4">Library Management System</h1>
+            <p class="lead mb-5">Welcome to our digital library system. Browse books or login to access more features.</p>
+        </div>
+    </div>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Browse Books</h3>
+                            <p class="card-text">View our collection of books and their availability.</p>
+                            <a href="{{ url_for('books') }}" class="btn btn-primary btn-lg">Browse Books</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Student Login</h3>
+                            <p class="card-text">Access your student account to borrow books and more.</p>
+                            <a href="{{ url_for('login') }}" class="btn btn-success btn-lg">Student Login</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Admin Login</h3>
+                            <p class="card-text">Login to manage library resources and users.</p>
+                            <a href="{{ url_for('admin_login') }}" class="btn btn-danger btn-lg">Admin Login</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Create Account</h3>
+                            <p class="card-text">Sign up for a new student account.</p>
+                            <a href="{{ url_for('signup') }}" class="btn btn-info btn-lg">Sign Up</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Fines - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h2>Manage Fines</h2>
+        </div>
+        <div class="col-md-6 text-end">
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary">Back to Admin Dashboard</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">All Fines</h5>
+        </div>
+        <div class="card-body">
+            {% if fines %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Book</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fine in fines %}
+                        <tr>
+                            <td>
+                                {{ fine[4] }}<br>
+                                <small class="text-muted">{{ fine[5] }}</small>
+                            </td>
+                            <td>{{ fine[6] }}</td>
+                            <td>${{ "%.2f"|format(fine[1]) }}</td>
+                            <td>
+                                {% if fine[2] == 'pending' %}
+                                    <span class="badge bg-warning">Pending</span>
+                                {% elif fine[2] == 'paid' %}
+                                    <span class="badge bg-success">Paid</span>
+                                {% else %}
+                                    <span class="badge bg-info">Waived</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ fine[3].strftime('%Y-%m-%d') }}</td>
+                            <td>
+                                {% if fine[2] == 'pending' %}
+                                <form action="{{ url_for('update_fine_status', fine_id=fine[0]) }}" method="POST" class="d-inline">
+                                    <input type="hidden" name="status" value="paid">
+                                    <select name="payment_method" class="form-select form-select-sm d-inline-block w-auto me-2">
+                                        <option value="cash">Cash</option>
+                                        <option value="card">Card</option>
+                                        <option value="online">Online</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-success btn-sm">Mark as Paid</button>
+                                </form>
+                                <form action="{{ url_for('update_fine_status', fine_id=fine[0]) }}" method="POST" class="d-inline ms-2">
+                                    <input type="hidden" name="status" value="waived">
+                                    <button type="submit" class="btn btn-warning btn-sm">Waive Fine</button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info mb-0">
+                No fines to manage at the moment.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

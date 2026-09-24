@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Reviews - {{ book[2] }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Reviews for "{{ book[2] }}"</h2>
+            <p class="text-muted">by {{ book[3] }}</p>
+        </div>
+    </div>
+
+    {% if current_user.is_authenticated %}
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Write a Review</h5>
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Rating</label>
+                            <select class="form-select" id="rating" name="rating" required>
+                                <option value="">Select rating</option>
+                                <option value="5">5 - Excellent</option>
+                                <option value="4">4 - Very Good</option>
+                                <option value="3">3 - Good</option>
+                                <option value="2">2 - Fair</option>
+                                <option value="1">1 - Poor</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="review" class="form-label">Your Review</label>
+                            <textarea class="form-control" id="review" name="review" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        {% if reviews %}
+            {% for review in reviews %}
+            <div class="col-12 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">
+                                {{ review[6] }}
+                                <small class="text-muted">rated {{ review[3] }}/5</small>
+                            </h5>
+                            <small class="text-muted">{{ review[5].strftime('%Y-%m-%d') }}</small>
+                        </div>
+                        <p class="card-text">{{ review[4] }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col">
+                <div class="alert alert-info">
+                    No reviews yet. Be the first to review this book!
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

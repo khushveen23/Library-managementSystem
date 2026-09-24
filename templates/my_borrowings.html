@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}My Borrowings - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h2>My Borrowings</h2>
+        </div>
+        <div class="col-md-6 text-end">
+            <a href="{{ url_for('student_dashboard') }}" class="btn btn-primary">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Book Title</th>
+                                    <th>Author</th>
+                                    <th>Borrow Date</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for borrowing in borrowings %}
+                                <tr>
+                                    <td>{{ borrowing[1] }}</td>
+                                    <td>{{ borrowing[2] }}</td>
+                                    <td>{{ borrowing[3].strftime('%Y-%m-%d') }}</td>
+                                    <td>{{ borrowing[4].strftime('%Y-%m-%d') }}</td>
+                                    <td>
+                                        {% if borrowing[5] == 'overdue' %}
+                                            <span class="badge bg-danger">Overdue</span>
+                                        {% elif borrowing[5] == 'borrowed' %}
+                                            <span class="badge bg-success">Borrowed</span>
+                                        {% elif borrowing[5] == 'pending_return' %}
+                                            <span class="badge bg-warning">Return Pending</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">{{ borrowing[5] }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if borrowing[5] in ['borrowed', 'overdue'] %}
+                                            {% if borrowing[5] == 'overdue' and borrowing[6] != 'paid' %}
+                                                <button class="btn btn-sm btn-warning" disabled>Pay Fine First</button>
+                                            {% else %}
+                                                <form action="{{ url_for('return_book', borrowing_id=borrowing[0]) }}" method="POST" style="display: inline;">
+                                                    <button type="submit" class="btn btn-sm btn-primary">Return Book</button>
+                                                </form>
+                                            {% endif %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

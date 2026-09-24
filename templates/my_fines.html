@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}My Fines - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h2>My Fines</h2>
+        </div>
+        <div class="col-md-6 text-end">
+            <a href="{{ url_for('student_dashboard') }}" class="btn btn-primary">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Fine Details</h5>
+                        {% if total_pending > 0 %}
+                        <span class="badge bg-warning">Total Pending: ${{ "%.2f"|format(total_pending) }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if fines %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Book</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Due Date</th>
+                                    <th>Payment Method</th>
+                                    <th>Paid Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for fine in fines %}
+                                <tr>
+                                    <td>{{ fine[4] }}</td>
+                                    <td>${{ "%.2f"|format(fine[1]) }}</td>
+                                    <td>
+                                        {% if fine[2] == 'pending' %}
+                                            <span class="badge bg-warning">Pending</span>
+                                        {% elif fine[2] == 'paid' %}
+                                            <span class="badge bg-success">Paid</span>
+                                        {% else %}
+                                            <span class="badge bg-info">Waived</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ fine[3].strftime('%Y-%m-%d') }}</td>
+                                    <td>{{ fine[8] if fine[8] else '-' }}</td>
+                                    <td>{{ fine[9].strftime('%Y-%m-%d') if fine[9] else '-' }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info mb-0">
+                        You have no fines at the moment.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

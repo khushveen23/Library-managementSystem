@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Admin Dashboard</h3>
+                    <p class="text-center mb-0">Welcome, Admin {{ current_user.admin_id }}!</p>
+                </div>
+                <div class="card-body">
+                    <!-- Statistics Row -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-primary text-white">
+                                <div class="card-body text-center">
+                                    <h5>Total Books</h5>
+                                    <h3>{{ total_books }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body text-center">
+                                    <h5>Total Users</h5>
+                                    <h3>{{ total_users }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-info text-white">
+                                <div class="card-body text-center">
+                                    <h5>Active Loans</h5>
+                                    <h3>{{ active_borrowings }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body text-center">
+                                    <h5>Pending Fines</h5>
+                                    <h3>{{ pending_fines }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Admin Actions -->
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Manage Books</h5>
+                                    <p class="card-text">Add, edit, or remove books from the library.</p>
+                                    <a href="{{ url_for('manage_books') }}" class="btn btn-primary">Manage Books</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Manage Returns</h5>
+                                    <p class="card-text">Process book returns and check conditions.</p>
+                                    <a href="{{ url_for('manage_returns') }}" class="btn btn-primary">Handle Returns</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Manage Fines</h5>
+                                    <p class="card-text">Review and handle student fines.</p>
+                                    <a href="{{ url_for('manage_fines') }}" class="btn btn-primary">Handle Fines</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Logout</h5>
+                                    <p class="card-text">Sign out from admin account.</p>
+                                    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

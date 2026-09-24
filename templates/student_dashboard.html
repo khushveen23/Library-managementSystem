@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard - Library Management System{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Student Dashboard</h3>
+                    <p class="text-center mb-0">Welcome, {{ current_user.name }}!</p>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Browse Books</h5>
+                                    <p class="card-text">Search and borrow books from our collection.</p>
+                                    <a href="{{ url_for('books') }}" class="btn btn-primary">View Books</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">My Borrowings</h5>
+                                    <p class="card-text">View and manage your borrowed books.</p>
+                                    <a href="{{ url_for('my_borrowings') }}" class="btn btn-primary">View Borrowings</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">My Fines</h5>
+                                    <p class="card-text">Check and pay any outstanding fines.</p>
+                                    <a href="{{ url_for('my_fines') }}" class="btn btn-primary">View Fines</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Logout</h5>
+                                    <p class="card-text">Sign out from your account.</p>
+                                    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
